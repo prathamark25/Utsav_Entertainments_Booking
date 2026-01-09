@@ -381,7 +381,7 @@
                 <label for="payment">Payment Method *</label>
                 <select id="payment" required onchange="updatePaymentField()">
                    <option value="">Choose payment method</option>
-                    <option value="paypal">PayPal</option>
+                    <option value="desipass">Desipass</option>
                     <option value="iban">IBAN Transfer</option>
                 </select>
             </div>
@@ -412,7 +412,8 @@
     
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwnGisHU3wS3HqxYGaSt_aPqPijpYW_H1br0Cr1jNmQxkHeakd9qLrBtbnWYCqqWjmP/exec';
-        const PAYPAL_LINK = 'https://paypal.me/KNaragoni?country.x=DE&locale.x=en_US';
+        const PAYPAL_LINK = 'https://paypal.me/HarshethaMKM?country.x=DE&locale.x=en_US';
+		const DESIPASS_LINK = 'https://www.desipass.com//events/events-details?eventId=01KEHAZ5MAD1QQFVF8APPB4AD4';
         
         const BANK_DETAILS = {
             name: 'Rajkumar Yelugam',
@@ -600,7 +601,7 @@
                         <h3>Payment Details:</h3>
                         ${bookingDetails}
                         <p><strong>Amount: €${totalPrice}</strong></p>
-                        <p><strong>PayPal ID: Knaragoni@gmail.com</strong></p>
+                        <p><strong>PayPal ID: @gmail.com</strong></p>
                     </div>
                 `;
             } else if (paymentMethod === 'iban') {
@@ -615,7 +616,17 @@
                         <p><strong>Amount: €${totalPrice}</strong></p>
                     </div>
                     <p style="color:red;">Please make sure to include your <strong>full name in the transfer reference</strong>.</p>
+					<p><b>PLEASE MAKE INSTANT TRANSFER.</b></p>
                     <p>Click "Proceed" to confirm that you will make the transfer.</p>
+                `;
+            } else if (paymentMethod === 'desipass') {
+                content.innerHTML = `
+                    <p>You will be redirected to Desipass for payment. Would you like to proceed?</p>
+                    <div class="payment-info">
+                        <h3>Payment Details:</h3>
+                        ${bookingDetails}
+                        <p><strong>Amount: €${totalPrice}</strong></p>
+                    </div>
                 `;
             }
             
@@ -629,6 +640,8 @@
         function proceedWithPayment() {
             if (currentPaymentMethod === 'paypal') {
                 window.open(PAYPAL_LINK, '_blank');
+            } else if (currentPaymentMethod === 'desipass') {
+                window.open(DESIPASS_LINK, '_blank');
             }
             submitBooking();
             document.getElementById('paymentModal').style.display = 'none';
@@ -761,7 +774,7 @@
             
             const paymentMethod = document.getElementById('payment').value;
             
-            if (paymentMethod === 'paypal' || paymentMethod === 'iban') {
+            if (paymentMethod === 'paypal' || paymentMethod === 'iban' || paymentMethod === 'desipass') {
                 showPaymentModal(paymentMethod);
             } else {
                 submitBooking();
@@ -892,6 +905,7 @@
     </script>
 </body>
 </html>
+
 
 
 
